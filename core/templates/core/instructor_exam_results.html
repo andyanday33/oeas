@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% block title %}Exam Results{% endblock %}
+
+
+{% block body %}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h3 class="display-3"> 
+            <a href="{% url 'exam_detail' exam.pk%}" class="link">
+                {{exam.name}}
+            </a>
+        </h3>
+        <p >{{exam.start_date}} - {{exam.end_date}}</p>
+        <hr class="my-2">
+
+        <p class="lead">List of students and their answers to {{exam.name}}.</p>
+        
+    </div>
+</div>
+<table class="table">
+    <thead >
+        <tr>
+            <td style="width: 50%;">
+                Student
+            </td>
+            <td>
+                Score
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sas in students_and_scores %}
+            <tr>
+                <td style="width: 50%;">
+                    {{sas.student.username}}
+                </td>
+                <td >
+                    {{sas.score}}
+                </td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

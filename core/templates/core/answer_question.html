@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}Answer Question{% endblock %}
+{% load bootstrap %}
+
+
+{% block body %}
+<h1>Question: {{question}} </h1>
+{{form_action_url}}
+<hr/>
+<form action="{{form_action_url}}" method="post">
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <input class="btn btn-primary" type="submit" value="Submit">
+</form>
+
+
+
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {%if previous_url is None%}disabled{%endif%}">
+        
+        <a class="page-link" href="{{previous_url}}">Previous</a>
+
+    </li>
+    {% for eq in exam_questions %}
+        {% if eq == question %}
+
+            <li class="page-item active">
+            <a class="page-link" href="{% url 'question_answer' eq.exam.pk eq.pk%}">{{eq.index}}</a>
+            </li>
+
+        {% else%}
+            <a class="page-link" href="{% url 'question_answer' eq.exam.pk eq.pk%}">{{eq.index}}</a>
+
+        {% endif%}
+    {% endfor %}
+
+    
+
+    <li class="page-item">
+      <a class="page-link" href="{{next_url}}">Next</a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}
